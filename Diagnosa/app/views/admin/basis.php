@@ -1,0 +1,87 @@
+<?php
+if (!session_id()) {
+    session_start();
+}
+?>
+<div class="main p-3">
+    <div class="container-hero">
+        <div class="d-flex justify-content-start ">
+            <div class="justify-content-center align-item-center custom-penyakit ">
+                <h2 class="text-center">Basis Aturan Penyakit Ikan</h2>
+                <div class="row">
+                    <div class="col-lg-6">
+                        <?php Flasher::flash(); ?>
+                    </div>
+                </div>
+                <!-- Button trigger modal -->
+                <a href="<?= BASEURL; ?>/admin/ikan" class="btn btn-primary tambahAturan">Tambah Aturan</a>
+                <div class="col-lg-6">
+                    <?php Flasher::flash(); ?>
+                </div>
+                <table class="table table-bordered tabel-aturan">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Nama Penyakit</th>
+                            <th>Nama Gejala</th>
+                            <th>aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- letakkan proses menampilkan disini -->
+                        <?php $no = 1;
+                        foreach ($data['aturan'] as $aturan) : ?>
+                            <tr>
+                                <td><?= $no++; ?></td>
+                                <td><?= $aturan['nama_penyakit']; ?></td>
+                                <td><?= $aturan['keterangan_penyakit']; ?></td>
+                                <td>
+                                    <a href="<?= BASEURL; ?>/admin/getDetailAturan/<?= $aturan['id_aturan']; ?>" class="badge text-center text-bg-primary">Detail</a>
+                                    <a href="<?= BASEURL; ?>/admin/getUbahAturan/<?= $aturan['id_aturan']; ?>" class="badge text-center text-bg-primary ubahAturan">Ubah</a>
+                                    <a href="<?= BASEURL; ?>/admin/hapusBasisAturan/<?= $aturan['id_aturan']; ?>" class="badge text-center text-bg-danger ubahGejala" onclick="return confirm('Hapus data');">Hapus</a>
+
+                                </td>
+                            </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- <button class="btn btn-diagnosa justify-content-end">Diagnosa</button> -->
+    </div>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="formGejala" tabindex="-1" aria-labelledby="TambahDataGejala" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="TambahDataGejala">Tambah Data Gejala</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form action="<?= BASEURL; ?>/admin/tambahGejala" method="post">
+                    <input type="hidden" name="id_gejala" id="idGejala">
+                    <div class="mb-3">
+                        <label for="nama_gejala" class="form-label">Nama Gejala</label>
+                        <input type="text" class="form-control" id="namaGejala" name="nama_gejala">
+                        <div id="NamaGejalaHelp" class="form-text">Isi Nama Gejala</div>
+                    </div>
+                    <!-- <div class="mb-3">
+                        <select class="form-select form-select-md mb-3 " aria-label="Large select example">
+                            <option selected>Open this select menu</option>
+                            <option value="1">Nila</option>
+                            <option value="2">Lele</option>
+                            <option value="3">Gurame</option>
+                        </select>
+                    </div> -->
+
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary">Tambah Penyakit</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
